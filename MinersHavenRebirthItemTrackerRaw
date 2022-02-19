@@ -279,7 +279,9 @@ local StartLife = Life.Value + 1
 local MoneyLib = require(game.ReplicatedStorage.MoneyLib)
 local Tiers = {30,33,36,38}--item tiers the gui will track. 
 local RBTime = os.time()
+local LastLife = Player.Rebirths.Value
 local OverAllTime = 0
+local LivesAdvanced = 0
 local LogShinysOnly = false--decide if the gui only tracks shines or not
 
 ScrollingFrame.CanvasSize = UDim2.new(0,0,0,0)
@@ -370,8 +372,13 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)--how th
     	    end
 	    end
 		LastItem.Text = "Last Item - "..Item.Name
-    	ElapseTime_2.Text ="Lifes Advanced - " ..Life.Value - StartLife
-	    Current.Text = "Current Life - "..GetSuffix()..Life.Value+1
+		local LifeChange = Life.Value - LastLife
+		if LifeChange < 1 then
+		LifeChange = 1
+		end
+		LivesAdvanced = LivesAdvanced +1
+    		ElapseTime_2.Text ="Lifes Advanced - " ..LivesAdvanced
+	    	Current.Text = "Current Life - "..GetSuffix()..Life.Value+1
 	end
 end)
 
