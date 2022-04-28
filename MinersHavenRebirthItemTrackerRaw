@@ -346,6 +346,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)--how th
     			local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
     			ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
     			ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
+			ItemFrame.LayoutOrder = ItemFrame.Amount.Value
     			ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
     		end
     	else
@@ -367,6 +368,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)--how th
         			local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
         			ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
         			ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
+				ItemFrame.LayoutOrder = ItemFrame.Amount.Value
         			ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
         		end
     	    end
