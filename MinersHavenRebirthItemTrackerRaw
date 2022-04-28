@@ -332,6 +332,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)--how th
     			Clone.ItemAmount.Text = "X"..Clone.Amount.Value
     			Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
     			Clone.Parent = ScrollingFrame
+			Clone.LayoutOrder = 100000000
     			ButtonCount.Value = ButtonCount.Value +1
     			ScrollingFrame.CanvasSize = UDim2.new(0,0,0,10+ButtonCount.Value*60)
     			if Item.RebornChance.Value <1 then
@@ -346,7 +347,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)--how th
     			local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
     			ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
     			ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
-			ItemFrame.LayoutOrder = ItemFrame.Amount.Value
+			ItemFrame.LayoutOrder = ItemFrame.LayoutOder -  ItemFrame.Amount.Value
     			ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
     		end
     	else
@@ -368,7 +369,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)--how th
         			local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
         			ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
         			ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
-				ItemFrame.LayoutOrder = ItemFrame.Amount.Value
+				ItemFrame.LayoutOrder = ItemFrame.LayoutOder -  ItemFrame.Amount.Value
         			ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
         		end
     	    end
