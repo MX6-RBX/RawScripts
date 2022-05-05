@@ -31,7 +31,7 @@ local UITextSizeConstraint_6 = Instance.new("UITextSizeConstraint")
 --Properties:
 
 RebirthLogger.Name = "RebirthLogger"
-RebirthLogger.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+RebirthLogger.Parent = game.CoreGui
 RebirthLogger.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Main.Name = "Main"
@@ -309,13 +309,13 @@ end
 
 UIS.InputBegan:Connect(function(Input)--toggle key function for the gui
     if UIS:GetFocusedTextBox() == nil then
-        if Input.KeyCode == Enum.KeyCode.T then --toggle key its self ( T By defult 
+        if Input.KeyCode == Enum.KeyCode.T then --toggle key its self ( T By defult)
 	    	Main.Visible = not Main.Visible
 	    end
     end
 end)
 
-game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)--how the gui gets the item(s) you obtained (i really suggest you leave this as is
+game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)--how the gui gets the item(s) you obtained (i really suggest you leave this as is)
 	if Item.ItemType.Value == 6 and table.find(Tiers,Item.Tier.Value) then
 	    if LogShinysOnly == false then
     		if ScrollingFrame:FindFirstChild(Item.Name) == nil then
