@@ -445,7 +445,7 @@ UIS.InputBegan:Connect(function(Input)--toggle key function for the gui
 	end
 end)
 
-game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)
+game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item,Amount)
 	if LogAll == false then 
 		print("Log rebirths only")
 		if Item.ItemType.Value == 6 and table.find(Tiers,Item.Tier.Value) then
@@ -458,7 +458,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)
 					Clone.BackgroundColor3 = GetTierColor(Item.Tier.Value)
 					Clone.ImageLabel.Image = "rbxassetid://"..Item.ThumbnailId.Value
 					Clone.ItemName.Text = Item.Name
-					Clone.Amount.Value = 1
+					Clone.Amount.Value = Amount
 					Clone.ItemAmount.Text = "X"..Clone.Amount.Value
 					Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
 					Clone.Parent = ScrollingFrame
@@ -474,7 +474,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)
 					Clone.Visible = true
 				else
 					local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
-					ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
+					ItemFrame.Amount.Value = ItemFrame.Amount.Value +Amount
 					ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
 					ItemFrame.LayoutOrder = ItemFrame.LayoutOrder -  ItemFrame.Amount.Value
 					ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
@@ -488,7 +488,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)
 						Clone.BackgroundColor3 = GetTierColor(Item.Tier.Value)
 						Clone.ImageLabel.Image = "rbxassetid://"..Item.ThumbnailId.Value
 						Clone.ItemName.Text = Item.Name
-						Clone.Amount.Value = 1
+						Clone.Amount.Value = Amount
 						Clone.ItemAmount.Text = "X"..Clone.Amount.Value
 						Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
 						Clone.Parent = ScrollingFrame
@@ -497,7 +497,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)
 						Clone.Visible = true
 					else
 						local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
-						ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
+						ItemFrame.Amount.Value = ItemFrame.Amount.Value +Amount
 						ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
 						ItemFrame.LayoutOrder = ItemFrame.LayoutOrder -  ItemFrame.Amount.Value
 						ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
@@ -515,7 +515,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)
 			Clone.BackgroundColor3 = GetTierColor(Item.Tier.Value)
 			Clone.ImageLabel.Image = "rbxassetid://"..Item.ThumbnailId.Value
 			Clone.ItemName.Text = Item.Name
-			Clone.Amount.Value = 1
+			Clone.Amount.Value = Amount
 			Clone.ItemAmount.Text = "X"..Clone.Amount.Value
 			Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
 			Clone.Parent = ScrollingFrame
@@ -524,7 +524,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)
 			Clone.Visible = true
 		else
 			local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
-			ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
+			ItemFrame.Amount.Value = ItemFrame.Amount.Value +Amount
 			ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
 			ItemFrame.LayoutOrder = ItemFrame.LayoutOrder -  ItemFrame.Amount.Value
 			ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
