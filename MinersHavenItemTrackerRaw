@@ -290,7 +290,7 @@ AllToggle.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 AllToggle.Position = UDim2.new(0.725000024, 10, 0.5, 0)
 AllToggle.Size = UDim2.new(0.224999994, 0, 0, 40)
 AllToggle.Font = Enum.Font.SourceSansBold
-AllToggle.Text = "Off"
+AllToggle.Text = "Track All: Off"
 AllToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
 AllToggle.TextScaled = true
 AllToggle.TextSize = 14.000
@@ -328,7 +328,7 @@ ShinyToggle.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 ShinyToggle.Position = UDim2.new(0.725000024, 10, 0.5, 0)
 ShinyToggle.Size = UDim2.new(0.224999994, 0, 0, 40)
 ShinyToggle.Font = Enum.Font.SourceSansBold
-ShinyToggle.Text = "Off"
+ShinyToggle.Text = "Track Shinies: Off"
 ShinyToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
 ShinyToggle.TextScaled = true
 ShinyToggle.TextSize = 14.000
@@ -544,15 +544,15 @@ end)
 AllToggle.MouseButton1Click:Connect(function()
 	if LogAll ==true then
 		LogAll = false
-		AllToggle.Text = "Off"
+		AllToggle.Text = "Track All: Off"
 		AllToggle.UIStroke.Color = Color3.fromRGB(255,50,50)
 	else
 		LogAll = true
-		AllToggle.Text = "On"
+		AllToggle.Text = "Track All: On"
 		AllToggle.UIStroke.Color = Color3.fromRGB(50,255,50)
 		if LogShinysOnly == true then
 			LogShinysOnly = false
-			ShinyToggle.Text = "Off"
+			ShinyToggle.Text = "Track Shinies: Off"
 			ShinyToggle.UIStroke.Color = Color3.fromRGB(255,50,50)
 		end
 	end
@@ -561,15 +561,15 @@ end)
 ShinyToggle.MouseButton1Click:Connect(function()
 	if LogShinysOnly == true then
 		LogShinysOnly = false
-		ShinyToggle.Text = "Off"
+		ShinyToggle.Text = "Track Shinies: Off"
 		ShinyToggle.UIStroke.Color = Color3.fromRGB(255,50,50)
 	else
 		LogShinysOnly = true
-		ShinyToggle.Text = "On"
+		ShinyToggle.Text = "Track Shinies: On"
 		ShinyToggle.UIStroke.Color = Color3.fromRGB(50,255,50)
 		if LogAll == true then 
 			LogAll = false
-			AllToggle.Text = "Off"
+			AllToggle.Text = "Track All: Off"
 			AllToggle.UIStroke.Color = Color3.fromRGB(255,50,50)
 		end
 	end
