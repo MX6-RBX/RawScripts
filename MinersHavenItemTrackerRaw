@@ -1,4 +1,5 @@
 local UIS = game:GetService("UserInputService")
+
 local RebirthLogger = Instance.new("ScreenGui")
 local Main = Instance.new("Frame")
 local ItemsFrame = Instance.new("Frame")
@@ -27,22 +28,34 @@ local ElapseTime = Instance.new("TextLabel")
 local UITextSizeConstraint_5 = Instance.new("UITextSizeConstraint")
 local ElapseTime_2 = Instance.new("TextLabel")
 local UITextSizeConstraint_6 = Instance.new("UITextSizeConstraint")
+local Toggles = Instance.new("Frame")
+local UICorner_5 = Instance.new("UICorner")
+local All = Instance.new("Frame")
+local Lable = Instance.new("TextLabel")
+local AllToggle = Instance.new("TextButton")
+local UICorner_6 = Instance.new("UICorner")
+local Lable_2 = Instance.new("TextLabel")
+local Shines = Instance.new("Frame")
+local ShinyToggle = Instance.new("TextButton")
+local UICorner_7 = Instance.new("UICorner")
+local Lable_3 = Instance.new("TextLabel")
+local Lable_4 = Instance.new("TextLabel")
 
 --Properties:
 
 RebirthLogger.Name = "RebirthLogger"
-RebirthLogger.Parent = game.CoreGui
+RebirthLogger.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 RebirthLogger.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Main.Name = "Main"
 Main.Parent = RebirthLogger
+Main.Active = true
 Main.AnchorPoint = Vector2.new(0.5, 0.5)
 Main.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-Main.Position = UDim2.new(0.5, 0, 0.5, 0)
-Main.Size = UDim2.new(0.300000012, 0, 0.400000006, 0)
-Main.Active= true
-Main.Selectable = true
 Main.Draggable = true
+Main.Position = UDim2.new(0.5, 0, 0.5, 0)
+Main.Selectable = true
+Main.Size = UDim2.new(0.300000012, 0, 0.400000006, 0)
 
 ItemsFrame.Name = "ItemsFrame"
 ItemsFrame.Parent = Main
@@ -60,8 +73,8 @@ ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
 
 UIGridLayout.Parent = ScrollingFrame
 UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIGridLayout.CellPadding = UDim2.new(0, 0, 0, 10)
 UIGridLayout.CellSize = UDim2.new(1, 0, 0, 50)
-UIGridLayout.CellPadding = UDim2.new(0,0,0,10)
 
 Template.Name = "Template"
 Template.Parent = ScrollingFrame
@@ -92,9 +105,9 @@ ItemName.Font = Enum.Font.ArialBold
 ItemName.TextColor3 = Color3.fromRGB(255, 255, 255)
 ItemName.TextScaled = true
 ItemName.TextSize = 14.000
+ItemName.TextStrokeTransparency = 0.000
 ItemName.TextWrapped = true
 ItemName.TextXAlignment = Enum.TextXAlignment.Left
-ItemName.TextStrokeTransparency = 0
 
 ItemAmount.Name = "ItemAmount"
 ItemAmount.Parent = Template
@@ -107,8 +120,7 @@ ItemAmount.Text = "X100"
 ItemAmount.TextColor3 = Color3.fromRGB(255, 255, 255)
 ItemAmount.TextScaled = true
 ItemAmount.TextSize = 14.000
-ItemAmount.TextTransparency = 0
-ItemAmount.TextStrokeTransparency  = 0
+ItemAmount.TextStrokeTransparency = 0.000
 ItemAmount.TextWrapped = true
 ItemAmount.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -122,9 +134,9 @@ LastObtained.Font = Enum.Font.ArialBold
 LastObtained.TextColor3 = Color3.fromRGB(255, 255, 255)
 LastObtained.TextScaled = true
 LastObtained.TextSize = 14.000
+LastObtained.TextStrokeTransparency = 0.000
 LastObtained.TextWrapped = true
 LastObtained.TextXAlignment = Enum.TextXAlignment.Left
-LastObtained.TextStrokeTransparency  = 0
 
 UIPadding.Parent = ScrollingFrame
 UIPadding.PaddingBottom = UDim.new(0, 10)
@@ -158,7 +170,6 @@ Start.TextScaled = true
 Start.TextSize = 14.000
 Start.TextWrapped = true
 
-UITextSizeConstraint.Archivable = false
 UITextSizeConstraint.Parent = Start
 UITextSizeConstraint.MaxTextSize = 30
 
@@ -175,7 +186,6 @@ Current.TextScaled = true
 Current.TextSize = 14.000
 Current.TextWrapped = true
 
-UITextSizeConstraint_2.Archivable = false
 UITextSizeConstraint_2.Parent = Current
 UITextSizeConstraint_2.MaxTextSize = 30
 
@@ -192,7 +202,6 @@ LastItem.TextScaled = true
 LastItem.TextSize = 14.000
 LastItem.TextWrapped = true
 
-UITextSizeConstraint_3.Archivable = false
 UITextSizeConstraint_3.Parent = LastItem
 UITextSizeConstraint_3.MaxTextSize = 30
 
@@ -202,15 +211,14 @@ FastestTime.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 FastestTime.BackgroundTransparency = 1.000
 FastestTime.Position = UDim2.new(0, 0, 0.5, 0)
 FastestTime.Size = UDim2.new(1, 0, 0.100000001, 0)
+FastestTime.Visible = false
 FastestTime.Font = Enum.Font.ArialBold
 FastestTime.Text = "Fast Recorded Time - 10S"
 FastestTime.TextColor3 = Color3.fromRGB(255, 255, 255)
 FastestTime.TextScaled = true
 FastestTime.TextSize = 14.000
 FastestTime.TextWrapped = true
-FastestTime.Visible = false
 
-UITextSizeConstraint_4.Archivable = false
 UITextSizeConstraint_4.Parent = FastestTime
 UITextSizeConstraint_4.MaxTextSize = 30
 
@@ -227,7 +235,6 @@ ElapseTime.TextScaled = true
 ElapseTime.TextSize = 14.000
 ElapseTime.TextWrapped = true
 
-UITextSizeConstraint_5.Archivable = false
 UITextSizeConstraint_5.Parent = ElapseTime
 UITextSizeConstraint_5.MaxTextSize = 30
 
@@ -244,9 +251,128 @@ ElapseTime_2.TextScaled = true
 ElapseTime_2.TextSize = 14.000
 ElapseTime_2.TextWrapped = true
 
-UITextSizeConstraint_6.Archivable = false
 UITextSizeConstraint_6.Parent = ElapseTime_2
 UITextSizeConstraint_6.MaxTextSize = 30
+
+Toggles.Name = "Toggles"
+Toggles.Parent = Main
+Toggles.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Toggles.Position = UDim2.new(0, 0, 1, 5)
+Toggles.Size = UDim2.new(1, 0, 0, 70)
+
+UICorner_5.CornerRadius = UDim.new(0, 10)
+UICorner_5.Parent = Toggles
+
+All.Name = "All"
+All.Parent = Toggles
+All.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+All.BackgroundTransparency = 1.000
+All.Size = UDim2.new(0.5, 0, 1, 0)
+
+Lable.Name = "Lable"
+Lable.Parent = All
+Lable.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Lable.BackgroundTransparency = 1.000
+Lable.Position = UDim2.new(0, 10, 0, 10)
+Lable.Size = UDim2.new(0.699999988, 0, 0.5, -10)
+Lable.Font = Enum.Font.SourceSansBold
+Lable.Text = "On: Track every Item you obtain"
+Lable.TextColor3 = Color3.fromRGB(255, 255, 255)
+Lable.TextScaled = true
+Lable.TextSize = 14.000
+Lable.TextTransparency = 0.500
+Lable.TextWrapped = true
+
+AllToggle.Name = "AllToggle"
+AllToggle.Parent = All
+AllToggle.AnchorPoint = Vector2.new(0, 0.5)
+AllToggle.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+AllToggle.Position = UDim2.new(0.725000024, 10, 0.5, 0)
+AllToggle.Size = UDim2.new(0.224999994, 0, 0, 40)
+AllToggle.Font = Enum.Font.SourceSansBold
+AllToggle.Text = "Off"
+AllToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+AllToggle.TextScaled = true
+AllToggle.TextSize = 14.000
+AllToggle.TextTransparency = 0.500
+AllToggle.TextWrapped = true
+
+UICorner_6.CornerRadius = UDim.new(0, 10)
+UICorner_6.Parent = AllToggle
+
+Lable_2.Name = "Lable"
+Lable_2.Parent = All
+Lable_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Lable_2.BackgroundTransparency = 1.000
+Lable_2.Position = UDim2.new(0, 10, 0.5, 0)
+Lable_2.Size = UDim2.new(0.699999988, 0, 0.5, -10)
+Lable_2.Font = Enum.Font.SourceSansBold
+Lable_2.Text = "Off: Only track Reborn Items you obtain"
+Lable_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+Lable_2.TextScaled = true
+Lable_2.TextSize = 14.000
+Lable_2.TextTransparency = 0.500
+Lable_2.TextWrapped = true
+
+Shines.Name = "Shines"
+Shines.Parent = Toggles
+Shines.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Shines.BackgroundTransparency = 1.000
+Shines.Position = UDim2.new(0.5, 0, 0, 0)
+Shines.Size = UDim2.new(0.5, 0, 1, 0)
+
+ShinyToggle.Name = "ShinyToggle"
+ShinyToggle.Parent = Shines
+ShinyToggle.AnchorPoint = Vector2.new(0, 0.5)
+ShinyToggle.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+ShinyToggle.Position = UDim2.new(0.725000024, 10, 0.5, 0)
+ShinyToggle.Size = UDim2.new(0.224999994, 0, 0, 40)
+ShinyToggle.Font = Enum.Font.SourceSansBold
+ShinyToggle.Text = "Off"
+ShinyToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+ShinyToggle.TextScaled = true
+ShinyToggle.TextSize = 14.000
+ShinyToggle.TextTransparency = 0.500
+ShinyToggle.TextWrapped = true
+
+UICorner_7.CornerRadius = UDim.new(0, 10)
+UICorner_7.Parent = ShinyToggle
+
+Lable_3.Name = "Lable"
+Lable_3.Parent = Shines
+Lable_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Lable_3.BackgroundTransparency = 1.000
+Lable_3.Position = UDim2.new(0, 10, 0, 10)
+Lable_3.Size = UDim2.new(0.699999988, 0, 0.5, -10)
+Lable_3.Font = Enum.Font.SourceSansBold
+Lable_3.Text = "On: Only track Shiny reborn items you obtain"
+Lable_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+Lable_3.TextScaled = true
+Lable_3.TextSize = 14.000
+Lable_3.TextTransparency = 0.500
+Lable_3.TextWrapped = true
+
+Lable_4.Name = "Lable"
+Lable_4.Parent = Shines
+Lable_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Lable_4.BackgroundTransparency = 1.000
+Lable_4.Position = UDim2.new(0, 10, 0.5, 0)
+Lable_4.Size = UDim2.new(0.699999988, 0, 0.5, -10)
+Lable_4.Font = Enum.Font.SourceSansBold
+Lable_4.Text = "Off: Track all reborn Items you obtain"
+Lable_4.TextColor3 = Color3.fromRGB(255, 255, 255)
+Lable_4.TextScaled = true
+Lable_4.TextSize = 14.000
+Lable_4.TextTransparency = 0.500
+Lable_4.TextWrapped = true
+
+local UIStroke_1 = Instance.new("UIStroke")
+UIStroke_1.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UIStroke_1.Color = Color3.fromRGB(255,50,50)
+UIStroke_1.Thickness = 3
+UIStroke_1.Parent = ShinyToggle
+
+UIStroke_1:Clone().Parent = AllToggle
 
 local ButtonCount = Instance.new("IntValue")
 ButtonCount.Name ="Count"
@@ -269,7 +395,7 @@ function GetSuffix()--puts the sac tag next to the life in the gui
 	end
 end
 
-local GUI = Player.PlayerGui.GUI
+local GUI = Player.PlayerGui:WaitForChild("GUI")
 local Life = Player.Rebirths
 local StartLife = Life.Value + 1
 local MoneyLib = require(game.ReplicatedStorage.MoneyLib)
@@ -279,6 +405,7 @@ local LastLife = Player.Rebirths.Value
 local OverAllTime = 0
 local LivesAdvanced = 0
 local LogShinysOnly = false--decide if the gui only tracks shines or not
+local LogAll = false
 
 ScrollingFrame.CanvasSize = UDim2.new(0,0,0,0)
 ScrollingFrame.ScrollBarThickness = 6
@@ -288,7 +415,7 @@ ElapseTime_2.Text = "Lifes Advanced - 0"
 LastItem.Text = "Last Item - NAN"
 
 function HandleTime(t)--converts the time in seconds into the HH:MM:SS format
-    
+
 	local seconds = t % 60
 	local minutes = math.floor(t / 60) % 60
 	local hours = math.floor(t / 3600) % 24
@@ -296,7 +423,7 @@ function HandleTime(t)--converts the time in seconds into the HH:MM:SS format
 	if seconds <10 then seconds = "0"..seconds end
 	if minutes <10 then minutes = "0"..minutes end
 	if hours <10 then hours = "0"..hours end
-	
+
 	return hours..":"..minutes..":"..seconds
 end
 
@@ -308,76 +435,143 @@ function GetTierColor(Tier)--Gets the items tier color
 end
 
 UIS.InputBegan:Connect(function(Input)--toggle key function for the gui
-    if UIS:GetFocusedTextBox() == nil then
-        if Input.KeyCode == Enum.KeyCode.T then --toggle key its self ( T By defult)
-	    	Main.Visible = not Main.Visible
-	    end
-    end
+	if UIS:GetFocusedTextBox() == nil then
+		if Input.KeyCode == Enum.KeyCode.T then --toggle key its self ( T By defult)
+			Main.Visible = not Main.Visible
+		elseif Input.KeyCode == Enum.KeyCode.Y then
+			Toggles.Visible = not Toggles.Visible
+
+		end
+	end
 end)
 
-game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)--how the gui gets the item(s) you obtained (i really suggest you leave this as is)
-	if Item.ItemType.Value == 6 and table.find(Tiers,Item.Tier.Value) then
-	    if LogShinysOnly == false then
-    		if ScrollingFrame:FindFirstChild(Item.Name) == nil then
-    			local Clone = Template:Clone()
-    			Clone.Name = Item.Name
-    			Clone.BackgroundColor3 = GetTierColor(Item.Tier.Value)
-    			Clone.ImageLabel.Image = "rbxassetid://"..Item.ThumbnailId.Value
-    			Clone.ItemName.Text = Item.Name
-    			Clone.Amount.Value = 1
-    			Clone.ItemAmount.Text = "X"..Clone.Amount.Value
-    			Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
-    			Clone.Parent = ScrollingFrame
-			Clone.LayoutOrder = 100000000
-    			ButtonCount.Value = ButtonCount.Value +1
-    			ScrollingFrame.CanvasSize = UDim2.new(0,0,0,10+ButtonCount.Value*60)
-    			if Item.RebornChance.Value <1 then
-    			    local Stroke = Instance.new("UIStroke")
-                    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-                    Stroke.Color = Color3.fromRGB(255, 0, 255)
-                    Stroke.Parent = game.workspace
-                    Stroke.Thickness = 3
-    			end
-    			Clone.Visible = true
-    		else
-    			local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
-    			ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
-    			ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
-			ItemFrame.LayoutOrder = ItemFrame.LayoutOrder -  ItemFrame.Amount.Value
-    			ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
-    		end
-    	else
-    	    if Item.ItemType.Value == 6 and Item.Tier.Value == 36 or Item.Tier.Value == 38 then 
-        	    if ScrollingFrame:FindFirstChild(Item.Name) == nil then
-        			local Clone = Template:Clone()
-        			Clone.Name = Item.Name
-        			Clone.BackgroundColor3 = GetTierColor(Item.Tier.Value)
-        			Clone.ImageLabel.Image = "rbxassetid://"..Item.ThumbnailId.Value
-        			Clone.ItemName.Text = Item.Name
-        			Clone.Amount.Value = 1
-        			Clone.ItemAmount.Text = "X"..Clone.Amount.Value
-        			Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
-        			Clone.Parent = ScrollingFrame
-        			ButtonCount.Value = ButtonCount.Value +1
-        			ScrollingFrame.CanvasSize = UDim2.new(0,0,0,10+ButtonCount.Value*60)
-        			Clone.Visible = true
-        		else
-        			local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
-        			ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
-        			ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
-				ItemFrame.LayoutOrder = ItemFrame.LayoutOrder -  ItemFrame.Amount.Value
-        			ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
-        		end
-    	    end
-	    end
-		LastItem.Text = "Last Item - "..Item.Name
-		local LifeChange = Life.Value - LastLife
-		if LifeChange < 1 then
-		LifeChange = 1
+game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item)
+	if LogAll == false then 
+		print("Log rebirths only")
+		if Item.ItemType.Value == 6 and table.find(Tiers,Item.Tier.Value) then
+			print(Item.Name.." is a reborn item")
+			if LogShinysOnly == false then
+				print("Log all reborns")
+				if ScrollingFrame:FindFirstChild(Item.Name) == nil then
+					local Clone = Template:Clone()
+					Clone.Name = Item.Name
+					Clone.BackgroundColor3 = GetTierColor(Item.Tier.Value)
+					Clone.ImageLabel.Image = "rbxassetid://"..Item.ThumbnailId.Value
+					Clone.ItemName.Text = Item.Name
+					Clone.Amount.Value = 1
+					Clone.ItemAmount.Text = "X"..Clone.Amount.Value
+					Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
+					Clone.Parent = ScrollingFrame
+					ButtonCount.Value = ButtonCount.Value +1
+					ScrollingFrame.CanvasSize = UDim2.new(0,0,0,10+ButtonCount.Value*60)
+					if Item.RebornChance.Value <1 then
+						local Stroke = Instance.new("UIStroke")
+						Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+						Stroke.Color = Color3.fromRGB(255, 0, 255)
+						Stroke.Parent = game.workspace
+						Stroke.Thickness = 3
+					end
+					Clone.Visible = true
+				else
+					local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
+					ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
+					ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
+					ItemFrame.LayoutOrder = ItemFrame.LayoutOrder -  ItemFrame.Amount.Value
+					ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
+				end
+				LastItem.Text = "Last Item - "..Item.Name
+			else
+				if Item.ItemType.Value == 6 and Item.Tier.Value == 36 or Item.Tier.Value == 38 then 
+					if ScrollingFrame:FindFirstChild(Item.Name) == nil then
+						local Clone = Template:Clone()
+						Clone.Name = Item.Name
+						Clone.BackgroundColor3 = GetTierColor(Item.Tier.Value)
+						Clone.ImageLabel.Image = "rbxassetid://"..Item.ThumbnailId.Value
+						Clone.ItemName.Text = Item.Name
+						Clone.Amount.Value = 1
+						Clone.ItemAmount.Text = "X"..Clone.Amount.Value
+						Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
+						Clone.Parent = ScrollingFrame
+						ButtonCount.Value = ButtonCount.Value +1
+						ScrollingFrame.CanvasSize = UDim2.new(0,0,0,10+ButtonCount.Value*60)
+						Clone.Visible = true
+					else
+						local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
+						ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
+						ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
+						ItemFrame.LayoutOrder = ItemFrame.LayoutOrder -  ItemFrame.Amount.Value
+						ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
+					end
+				end
+				LastItem.Text = "Last Item - "..Item.Name
+			end
+
 		end
-		LivesAdvanced = LivesAdvanced +1
-    		ElapseTime_2.Text ="Lifes Advanced - " ..LivesAdvanced
-	    	Current.Text = "Current Life - "..GetSuffix()..Life.Value+1
+
+	else
+		if ScrollingFrame:FindFirstChild(Item.Name) == nil then
+			local Clone = Template:Clone()
+			Clone.Name = Item.Name
+			Clone.BackgroundColor3 = GetTierColor(Item.Tier.Value)
+			Clone.ImageLabel.Image = "rbxassetid://"..Item.ThumbnailId.Value
+			Clone.ItemName.Text = Item.Name
+			Clone.Amount.Value = 1
+			Clone.ItemAmount.Text = "X"..Clone.Amount.Value
+			Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
+			Clone.Parent = ScrollingFrame
+			ButtonCount.Value = ButtonCount.Value +1
+			ScrollingFrame.CanvasSize = UDim2.new(0,0,0,10+ButtonCount.Value*60)
+			Clone.Visible = true
+		else
+			local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
+			ItemFrame.Amount.Value = ItemFrame.Amount.Value +1
+			ItemFrame.ItemAmount.Text = "X"..ItemFrame.Amount.Value
+			ItemFrame.LayoutOrder = ItemFrame.LayoutOrder -  ItemFrame.Amount.Value
+			ItemFrame.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
+		end
+		LastItem.Text = "Last Item - "..Item.Name
+	end
+
+	local LifeChange = Life.Value - LastLife
+	if LifeChange > 0 then
+		LivesAdvanced = LivesAdvanced + LifeChange
+		LastLife = Life.Value
+	end
+	ElapseTime_2.Text ="Lifes Advanced - " ..LivesAdvanced
+	Current.Text = "Current Life - "..GetSuffix()..Life.Value+1
+end)
+
+AllToggle.MouseButton1Click:Connect(function()
+	if LogAll ==true then
+		LogAll = false
+		AllToggle.Text = "Off"
+		AllToggle.UIStroke.Color = Color3.fromRGB(255,50,50)
+	else
+		LogAll = true
+		AllToggle.Text = "On"
+		AllToggle.UIStroke.Color = Color3.fromRGB(50,255,50)
+		if LogShinysOnly == true then
+			LogShinysOnly = false
+			ShinyToggle.Text = "Off"
+			ShinyToggle.UIStroke.Color = Color3.fromRGB(255,50,50)
+		end
+	end
+end)
+
+ShinyToggle.MouseButton1Click:Connect(function()
+	if LogShinysOnly == true then
+		LogShinysOnly = false
+		ShinyToggle.Text = "Off"
+		ShinyToggle.UIStroke.Color = Color3.fromRGB(255,50,50)
+	else
+		LogShinysOnly = true
+		ShinyToggle.Text = "On"
+		ShinyToggle.UIStroke.Color = Color3.fromRGB(50,255,50)
+		if LogAll == true then 
+			LogAll = false
+			AllToggle.Text = "Off"
+			AllToggle.UIStroke.Color = Color3.fromRGB(255,50,50)
+		end
 	end
 end)
 
