@@ -463,7 +463,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item,Amount)
 					Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
 					Clone.Parent = ScrollingFrame
 					ButtonCount.Value = ButtonCount.Value +1
-					ScrollingFrame.CanvasSize = UDim2.new(0,0,0,10+ButtonCount.Value*60)
+					ScrollingFrame.CanvasSize = UDim2.new(0,0,0,UIGridLayout.AbsoluteContentSize+20)
 					if Item.RebornChance.Value <1 then
 						local Stroke = Instance.new("UIStroke")
 						Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -493,7 +493,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item,Amount)
 						Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
 						Clone.Parent = ScrollingFrame
 						ButtonCount.Value = ButtonCount.Value +1
-						ScrollingFrame.CanvasSize = UDim2.new(0,0,0,10+ButtonCount.Value*60)
+					    ScrollingFrame.CanvasSize = UDim2.new(0,0,0,UIGridLayout.AbsoluteContentSize+20)
 						Clone.Visible = true
 					else
 						local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
@@ -520,7 +520,7 @@ game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item,Amount)
 			Clone.LastObtained.Text = "Last Obtained - "..GetSuffix()..Life.Value+1
 			Clone.Parent = ScrollingFrame
 			ButtonCount.Value = ButtonCount.Value +1
-			ScrollingFrame.CanvasSize = UDim2.new(0,0,0,10+ButtonCount.Value*60)
+			ScrollingFrame.CanvasSize = UDim2.new(0,0,0,UIGridLayout.AbsoluteContentSize+20)
 			Clone.Visible = true
 		else
 			local ItemFrame = ScrollingFrame:FindFirstChild(Item.Name)
