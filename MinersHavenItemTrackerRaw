@@ -447,11 +447,11 @@ end)
 
 game.ReplicatedStorage.ItemObtained.OnClientEvent:Connect(function(Item,Amount)
 	if LogAll == false then 
-		print("Log rebirths only")
+		--print("Log rebirths only")
 		if Item.ItemType.Value == 6 and table.find(Tiers,Item.Tier.Value) then
-			print(Item.Name.." is a reborn item")
+			--print(Item.Name.." is a reborn item")
 			if LogShinysOnly == false then
-				print("Log all reborns")
+				--print("Log all reborns")
 				if ScrollingFrame:FindFirstChild(Item.Name) == nil then
 					local Clone = Template:Clone()
 					Clone.Name = Item.Name
