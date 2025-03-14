@@ -55,7 +55,7 @@ Main.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Main.Draggable = true
 Main.Position = UDim2.new(0.5, 0, 0.5, 0)
 Main.Selectable = true
-Main.Size = UDim2.new(0.300000012, 0, 0.400000006, 0)
+Main.Size = UDim2.new(0.2, 0, 0.33, 0)
 
 ItemsFrame.Name = "ItemsFrame"
 ItemsFrame.Parent = Main
@@ -398,7 +398,7 @@ end
 local GUI = Player.PlayerGui:WaitForChild("GUI")
 local Life = Player.Rebirths
 local StartLife = Life.Value + 1
-local MoneyLib = require(game.ReplicatedStorage.MoneyLib)
+--local MoneyLib = require(game.ReplicatedStorage.MoneyLib)
 local Tiers = {30,33,36,38}--item tiers the gui will track. 
 local RBTime = os.time()
 local LastLife = Player.Rebirths.Value
