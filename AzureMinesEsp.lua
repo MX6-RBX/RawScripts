@@ -216,15 +216,22 @@ local function LoadButtons()
 		local button = Template:Clone()
 		button.Name = ore.Name
 		button.OreName.Text = ore.Name
+		button.Visible = true
 		if ore:IsA("Model") then 
+			print("Is Model")
 			button.LayoutOrder = 10000
+		elseif ore:FindFirstChild("MaxRarity") and ore:FindFirstChild("MaxRarity").Value == 0 and ore:FindFirstChild("MinRarity").Value == 0 then
+			print("Hiding",button.Name)
+			button.Visible = false
 		elseif ore:FindFirstChild("MaxDepth") and ore:FindFirstChild("MaxDepth").Value < 5880 then
+			print("Is in minable area")
 			button.LayoutOrder = ore:FindFirstChild("MaxDepth").Value
 		elseif ore:FindFirstChild("MaxDepth") and ore:FindFirstChild("MaxDepth").Value > 5879 then
+			print("Is too deep")
 			button.LayoutOrder = 100000
-		elseif ore:FindFirstChild("MaxRarity") and ore:FindFirstChild("MaxRarity") == 0 and ore:FindFirstChild("MinRarity") == 0 then
-			button.Visible = false
+		
 		else
+			print("Yeet")
 			button.LayoutOrder = 100000+1
 		end
 		local Info   = ""
@@ -263,7 +270,6 @@ local function LoadButtons()
 		end
 		button.ImageLabel.Image = Image
 		button.Parent = OreScroll
-		button.Visible = true
 	end
 end
 LoadButtons()
