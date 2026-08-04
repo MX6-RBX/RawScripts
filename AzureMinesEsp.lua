@@ -214,6 +214,15 @@ UICorner_7.CornerRadius = UDim.new(0, 12)
 UICorner_7.Parent = Search
 
 
+for i,v in game.Workspace.Tycoons:GetChildren() do
+	if not v.Owner.Value then continue end 
+	if v.Owner.Value.Name == LocalPlayer.Name then
+		if v.Items.Tunnel:FindFirstChild("Model") then
+			v.Items.Tunnel:FindFirstChild("Model"):Destroy()
+		end
+	end
+end
+
 local ores = game.ReplicatedStorage:WaitForChild("Ores"):GetChildren()
 print("Begin")
 local Toggles = {
@@ -243,6 +252,7 @@ local function LoadButtons()
 		elseif ore:FindFirstChild("MaxRarity") and ore:FindFirstChild("MaxRarity").Value == 0 and ore:FindFirstChild("MinRarity").Value == 0 then
 			print("Hiding",button.Name)
 			button.Visible = false
+			Instance.new("BoolValue",button).Name = "Hide"
 		elseif ore:FindFirstChild("MaxDepth") and ore:FindFirstChild("MaxDepth").Value < 5880 then
 			print("Is in minable area")
 			button.LayoutOrder = ore:FindFirstChild("MaxDepth").Value
@@ -538,6 +548,9 @@ Search:GetPropertyChangedSignal("Text"):Connect(function()
 		if btn:IsA("TextButton") then
 			local oreName = string.lower(btn.Name)
 			btn.Visible = string.find(oreName, searchText, 1, true) ~= nil
+			if btn:FindFirstChild("Hide") then
+				btn.Visible = false
+			end
 		end
 	end
 end)
