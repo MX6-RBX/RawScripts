@@ -32,11 +32,13 @@ local UIStroke_3 = Instance.new("UIStroke")
 local ImageLabel = Instance.new("ImageLabel")
 local UICorner_6 = Instance.new("UICorner")
 local UIStroke_4 = Instance.new("UIStroke")
+local Search = Instance.new("TextBox")
+local UICorner_7 = Instance.new("UICorner")
 
 --Properties:
 
 OreListGui.Name = "OreListGui"
-OreListGui.Parent = LocalPlayer.PlayerGui
+OreListGui.Parent = game:GetService("CoreGui")
 OreListGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 OreListGui.ResetOnSpawn = false
 
@@ -65,7 +67,6 @@ MainPanel.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 MainPanel.BackgroundTransparency = 0.050
 MainPanel.Position = UDim2.new(0, 20, 0.870000005, -230)
 MainPanel.Size = UDim2.new(0, 360, 0, 460)
-MainPanel.Visible = false
 
 UICorner_2.CornerRadius = UDim.new(0, 12)
 UICorner_2.Parent = MainPanel
@@ -116,16 +117,17 @@ UICorner_4.Parent = CloseBtn
 
 OreScroll.Name = "OreScroll"
 OreScroll.Parent = MainPanel
+OreScroll.AnchorPoint = Vector2.new(0, 1)
 OreScroll.BackgroundTransparency = 1.000
-OreScroll.Position = UDim2.new(0, 0, 0, 52)
-OreScroll.Size = UDim2.new(1, 0, 1, -60)
+OreScroll.Position = UDim2.new(0, 0, 1, 0)
+OreScroll.Size = UDim2.new(1, 0, 1, -84)
 OreScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 OreScroll.ScrollBarThickness = 6
 OreScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 
 UIListLayout.Parent = OreScroll
-UIListLayout.Padding = UDim.new(0, 10)
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 10)
 
 UIPadding.Parent = OreScroll
 UIPadding.PaddingBottom = UDim.new(0, 10)
@@ -137,8 +139,8 @@ Template.Name = "Template"
 Template.Parent = OreScroll
 Template.BackgroundColor3 = Color3.fromRGB(35, 38, 48)
 Template.Size = UDim2.new(1, -6, 0, 72)
-Template.Text = ""
 Template.Visible = false
+Template.Text = ""
 
 UICorner_5.Parent = Template
 
@@ -179,7 +181,6 @@ UIStroke_3.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke_3.Color = Color3.fromRGB(85, 255, 127)
 UIStroke_3.Thickness = 3.000
 UIStroke_3.Parent = Template
-UIStroke_3.Enabled = false
 
 ImageLabel.Parent = Template
 ImageLabel.Position = UDim2.new(0, 10, 0.5, -22)
@@ -193,9 +194,28 @@ UIStroke_4.Color = Color3.fromRGB(100, 100, 120)
 UIStroke_4.Thickness = 1.500
 UIStroke_4.Parent = ImageLabel
 
+Search.Name = "Search"
+Search.Parent = MainPanel
+Search.AnchorPoint = Vector2.new(0.5, 0)
+Search.BackgroundColor3 = Color3.fromRGB(42, 53, 66)
+Search.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Search.BorderSizePixel = 0
+Search.Position = UDim2.new(0.5, 0, 0, 47)
+Search.Size = UDim2.new(1, -30, 0, 35)
+Search.Font = Enum.Font.SourceSansBold
+Search.PlaceholderText = "Search"
+Search.Text = ""
+Search.TextColor3 = Color3.fromRGB(255, 255, 255)
+Search.TextScaled = true
+Search.TextSize = 14.000
+Search.TextWrapped = true
+
+UICorner_7.CornerRadius = UDim.new(0, 12)
+UICorner_7.Parent = Search
+
 
 local ores = game.ReplicatedStorage:WaitForChild("Ores"):GetChildren()
-
+print("Begin")
 local Toggles = {
 
 }
@@ -287,6 +307,10 @@ local Tasks = {}
 local mineFolder = nil    -- Forward declaration, assigned in section 6
 
 for oreName, _ in pairs(Toggles) do
+	local RealOre = game.ReplicatedStorage.Ores:FindFirstChild(oreName)
+	if (RealOre:FindFirstChild("MaxRarity") and RealOre:FindFirstChild("MinRarity") and RealOre.MaxRarity.Value == 0 and RealOre.MinRarity.Value == 0) or (RealOre:FindFirstChild("MaxDepth") and RealOre.MaxDepth.Value > 5880) then
+		continue
+	end
 	local containerModel
 
 	if EspFolder:FindFirstChild(oreName .. "_ESP") then 
@@ -295,7 +319,8 @@ for oreName, _ in pairs(Toggles) do
 		containerModel = Instance.new("Model")
 		containerModel.Name = oreName .. "_ESP"
 		containerModel.Parent = EspFolder
-		local Color = game.ReplicatedStorage.Ores:FindFirstChild(oreName):FindFirstChild("OreColor")
+		
+		local Color = RealOre:FindFirstChild("OreColor")
 		if Color then Color = Color.Value end 
 		local highlight = Instance.new("Highlight")
 		highlight.Name = "Highlight"
@@ -308,7 +333,7 @@ for oreName, _ in pairs(Toggles) do
 		highlight.Parent = containerModel
 		Highlights[oreName] = highlight
 	end
-
+	task.wait(0.01)
 	OreModels[oreName] = containerModel
 
 end
@@ -333,7 +358,7 @@ end
 
 local function cleanInstance(instance)
 	for _, child in ipairs(instance:GetDescendants()) do
-		if child:IsA("Script") or child:IsA("LocalScript") or child:IsA("Sound") or child:IsA("TouchTransmitter") then
+		if child:IsA("Script") or child:IsA("LocalScript") or child:IsA("Sound") or child:IsA("TouchTransmitter") or child:IsA("Decal") then
 			child:Destroy()
 		elseif child:IsA("BasePart") then
 			child.CanCollide = false
@@ -507,4 +532,12 @@ if oreScroll then
 	end
 end
 
-
+Search:GetPropertyChangedSignal("Text"):Connect(function()
+	local searchText = string.lower(Search.Text)
+	for _, btn in ipairs(oreScroll:GetChildren()) do
+		if btn:IsA("TextButton") then
+			local oreName = string.lower(btn.Name)
+			btn.Visible = string.find(oreName, searchText, 1, true) ~= nil
+		end
+	end
+end)
