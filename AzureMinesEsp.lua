@@ -138,6 +138,7 @@ Template.Parent = OreScroll
 Template.BackgroundColor3 = Color3.fromRGB(35, 38, 48)
 Template.Size = UDim2.new(1, -6, 0, 72)
 Template.Text = ""
+Template.Visible = false
 
 UICorner_5.Parent = Template
 
@@ -193,35 +194,22 @@ UIStroke_4.Thickness = 1.500
 UIStroke_4.Parent = ImageLabel
 
 
-
+local ores = game.ReplicatedStorage:WaitForChild("Ores"):GetChildren()
 
 local Toggles = {
-	["Azure"] = false,
-	["Metal Plate"] = false,
-	["Copper Plate"] = false,
-	["Torch"] = false,
-	["Tombstone"] = false,
-	["Ladder Brick"] = false,
-	["Teleport Pad"] = false,
-	["Boomite"] = false,
-	["Coal"] = false,
-	["Iron"] = false,
-	["Silver"] = false,
-	["Ruby"] = false,
-	["Sapphire"] = false,
-	["Emerald"] = false,
-	["Gold"] = false,
-	["Diamond"] = false,
-	["Opal"] = false,
-	["Topaz"] = false,
-	["Sulfur"] = false,
-	["Copper"] = false,
 
 }
 
-
+local function SetupOres()
+	for i,v in ores do
+		if v.Name == "Stone" then continue end
+		Toggles[v.Name] = false
+	end
+end
+SetupOres()
+wait(0.1)
 local function LoadButtons()
-	local ores = game.ReplicatedStorage:WaitForChild("Ores"):GetChildren()
+
 	for i, ore in pairs(ores) do
 		if Toggles[ore.Name] == nil then continue end 
 		print("Loading ",ore.Name)
@@ -229,7 +217,15 @@ local function LoadButtons()
 		button.Name = ore.Name
 		button.OreName.Text = ore.Name
 		if ore:IsA("Model") then 
-			button.LayoutOrder = 100
+			button.LayoutOrder = 10000
+		elseif ore:FindFirstChild("MaxDepth") and ore:FindFirstChild("MaxDepth").Value < 5880 then
+			button.LayoutOrder = ore:FindFirstChild("MaxDepth").Value
+		elseif ore:FindFirstChild("MaxDepth") and ore:FindFirstChild("MaxDepth").Value > 5879 then
+			button.LayoutOrder = 100000
+		elseif ore:FindFirstChild("MaxRarity") and ore:FindFirstChild("MaxRarity") == 0 and ore:FindFirstChild("MinRarity") == 0 then
+			button.Visible = false
+		else
+			button.LayoutOrder = 100000+1
 		end
 		local Info   = ""
 		if ore:FindFirstChild("Strength") then
@@ -281,11 +277,12 @@ EspFolder.Parent = Workspace
 local OreModels = {}      -- Stores [OreName] = ModelInstance
 local Highlights = {}     -- Stores [OreName] = HighlightInstance
 local TrackedCopies = {}  -- Stores [RealOre] = FakeCopy
+local Tasks = {}
 local mineFolder = nil    -- Forward declaration, assigned in section 6
 
 for oreName, _ in pairs(Toggles) do
 	local containerModel
-	
+
 	if EspFolder:FindFirstChild(oreName .. "_ESP") then 
 		containerModel = EspFolder[oreName .. "_ESP"]
 	else
@@ -305,9 +302,9 @@ for oreName, _ in pairs(Toggles) do
 		highlight.Parent = containerModel
 		Highlights[oreName] = highlight
 	end
-	
+
 	OreModels[oreName] = containerModel
-	
+
 end
 
 local function getOreColor(realOre)
@@ -357,10 +354,6 @@ local function addFakeCopy(realOre)
 
 	-- Dynamically grab the real color from the ore model/part
 	local detectedColor = getOreColor(realOre)
-	if Highlights[oreName] then
-		Highlights[oreName].FillColor = detectedColor
-	end
-
 	-- Create client-side fake clone
 	realOre.Archivable = true
 	local fakeCopy = realOre:Clone()
@@ -400,12 +393,21 @@ end
 
 -- Add fake copies for all existing ores of a specific type (used when toggling on)
 local function addAllCopiesForOre(oreName)
+	Tasks[oreName] = true
 	if not mineFolder then return end
+	local Count = 0
 	for _, item in ipairs(mineFolder:GetChildren()) do
 		if item.Name == oreName then
+		    Count+=1
 			addFakeCopy(item)
+			if Count%10 == 0 then
+			task.wait(0.01)
+			end
 		end
 	end
+	print("Added all",oreName)
+	Tasks[oreName] = nil
+	return
 end
 
 mineFolder = Workspace:WaitForChild("Mine", 10)
@@ -429,69 +431,74 @@ if mineFolder then
 		removeFakeCopy(child)
 	end)
 end
-	
 
 
 
-	local toggleBtn = ToggleBtn
-	local closeBtn = CloseBtn
 
-	-- Panel open/close
-	local isPanelOpen = false
+local toggleBtn = ToggleBtn
+local closeBtn = CloseBtn
+
+-- Panel open/close
+local isPanelOpen = false
+if MainPanel then
+	MainPanel.Visible = false
+end
+
+local function setPanelOpen(open)
+	isPanelOpen = open
 	if MainPanel then
-		MainPanel.Visible = false
+		MainPanel.Visible = open
 	end
+end
 
-	local function setPanelOpen(open)
-		isPanelOpen = open
-		if MainPanel then
-			MainPanel.Visible = open
-		end
-	end
+if toggleBtn then
+	toggleBtn.MouseButton1Click:Connect(function()
+		setPanelOpen(not isPanelOpen)
+	end)
+end
 
-	if toggleBtn then
-		toggleBtn.MouseButton1Click:Connect(function()
-			setPanelOpen(not isPanelOpen)
-		end)
-	end
+if closeBtn then
+	closeBtn.MouseButton1Click:Connect(function()
+		setPanelOpen(false)
+	end)
+end
 
-	if closeBtn then
-		closeBtn.MouseButton1Click:Connect(function()
-			setPanelOpen(false)
-		end)
-	end
+-- Ore toggle buttons
+local oreScroll = MainPanel and MainPanel:FindFirstChild("OreScroll")
+if oreScroll then
+	for _, btn in ipairs(oreScroll:GetChildren()) do
+		if btn:IsA("TextButton") then
+			local oreName = btn.Name
+			local stroke = btn:FindFirstChildOfClass("UIStroke")
 
-	-- Ore toggle buttons
-	local oreScroll = MainPanel and MainPanel:FindFirstChild("OreScroll")
-	if oreScroll then
-		for _, btn in ipairs(oreScroll:GetChildren()) do
-			if btn:IsA("TextButton") then
-				local oreName = btn.Name
-				local stroke = btn:FindFirstChildOfClass("UIStroke")
-
-				-- Sync stroke to initial toggle state
-				if stroke then
-					stroke.Enabled = Toggles[oreName] or false
-				end
-
-				btn.MouseButton1Click:Connect(function()
-					print("Clicked",btn.Name)
-					Toggles[oreName] = not Toggles[oreName]
-
-					if stroke then
-						stroke.Enabled = Toggles[oreName]
-					end
-
-					if Toggles[oreName] then
-						print("Enabled")
-						-- Toggle turned ON: add copies for existing ores of this type
-						addAllCopiesForOre(oreName)
-					else
-						print("Disable")
-						-- Toggle turned OFF: remove all copies of this type
-						removeAllCopiesForOre(oreName)
-					end
-				end)
+			-- Sync stroke to initial toggle state
+			if stroke then
+				stroke.Enabled = Toggles[oreName] or false
 			end
+
+			btn.MouseButton1Click:Connect(function()
+				print("Clicked",btn.Name)
+				if Tasks[oreName] then return end 
+				Toggles[oreName] = not Toggles[oreName]
+
+				
+
+				if Toggles[oreName] then
+					print("Enabled")
+					
+					-- Toggle turned ON: add copies for existing ores of this type
+					addAllCopiesForOre(oreName)
+				else
+					print("Disable")
+					-- Toggle turned OFF: remove all copies of this type
+					removeAllCopiesForOre(oreName)
+				end
+				if stroke then
+					stroke.Enabled = Toggles[oreName]
+				end
+			end)
 		end
 	end
+end
+
+
